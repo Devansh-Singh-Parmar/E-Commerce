@@ -5,7 +5,7 @@ const Image = require("../models/products-img");
 
 router.post("/image-upload-product", function (req, res) {
   try {
-    // let reqImageUrl = req.body.imageUrl;
+    let reqImageUrl = req.body.imageUrl;
     // if (imageUrl) {
     //   const newImage = new Image({
     //     imageUrl: reqImageUrl
@@ -18,18 +18,20 @@ router.post("/image-upload-product", function (req, res) {
     //       console.log(result)
     //     }
     // })
-    if (imageUrl) {
-      Image.create({ imageUrl })
-        .then((img) => {
+    if (reqImageUrl) {
+      Image.create({ imageUrl: reqImageUrl })
+        .then(() => {
           return res.json({ message: "Image Uploaded successfully" });
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err);
           return res.status(500).json({
             message: "Something went wrong line 30",
           });
         });
     } else return res.status(500).json({ message: "Image URL Undefined" });
   } catch (e) {
+    console.log(e);
     return res.status(500).json({ message: "Something went wrong line 33" });
   }
 });
