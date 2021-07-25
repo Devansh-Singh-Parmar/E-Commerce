@@ -1,55 +1,62 @@
-const { response } = require("express");
+const {
+    response
+} = require("express");
 const express = require("express");
 const router = express.Router();
 const Image = require("../models/products-img");
 
 router.post("/image-upload-product", function (req, res) {
-  try {
-    let reqImageUrl = req.body.imageUrl;
-    if (imageUrl) {
-      const newImage = new Image({
-        imageUrl: reqImageUrl
-      })
-      newImage.save((err,result) => {
-        if (err){
-          res.status(500).json({message: "something went wrong"});
-          console.log(err);
-        }else{
-          console.log(result)
-        }
-    })
-      // Image.create({ imageUrl })
-        // .then((img) => {
-        //   return res.json({
-        //     message: "Image Uploaded successfully",
+    try {
+        // let reqImageUrl = req.body.imageUrl;
+        // if (imageUrl) {
+        //   const newImage = new Image({
+        //     imageUrl: reqImageUrl,
         //   });
-        // })
-        // .catch(() => {
-        //   return res.status(500).json({
-        //     message: "Something went wrong",
+        //   newImage.save((err, result) => {
+        //     if (err) {
+        //       res.status(500).json({ message: "something went wrong line 15" });
+        //       console.log(err);
+        //     } else {
+        //       console.log(result);
+        //     }
         //   });
-        // });
-    } else
-      return res.status(500).json({
-        message: "Image URL Undefined",
-      });
-  } catch (e) {
+        Image.create({
+                imageUrl
+            })
+            .then((img) => {
+                return res.json({
+                    message: "Image Uploaded successfully",
+                });
+            })
+            .catch(() => {
+                return res.status(500).json({
+                    message: "Something went wrong",
+                });
+            });
+    } else {
+        return res.status(500).json({
+            message: "Image URL Undefined",
+        })
+    };
+} catch (e) {
     return res.status(500).json({
-      message: "Something went wrong",
+        message: "Something went wrong line 38.",
     });
-  }
+}
 });
 
 router.get("/products-images", function (req, res) {
-  try {
-    Image.find().then((images) => {
-      return res.json({ images });
-    });
-  } catch (e) {
-    return res.status(500).json({
-      message: "Something went wrong",
-    });
-  }
+    try {
+        Image.find().then((images) => {
+            return res.json({
+                images
+            });
+        });
+    } catch (e) {
+        return res.status(500).json({
+            message: "Something went wrong",
+        });
+    }
 });
 
 module.exports = router;
