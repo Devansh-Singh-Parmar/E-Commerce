@@ -1,11 +1,13 @@
-const { response } = require("express");
+const {
+  response
+} = require("express");
 const express = require("express");
 const router = express.Router();
 const Image = require("../models/products-img");
 
 router.post("/image-upload-product", function (req, res) {
   try {
-    let reqImageUrl = req.body.imageUrl;
+    // let reqImageUrl = req.body.imageUrl;
     // if (imageUrl) {
     //   const newImage = new Image({
     //     imageUrl: reqImageUrl
@@ -38,7 +40,9 @@ router.post("/image-upload-product", function (req, res) {
 router.get("/products-images", function (req, res) {
   try {
     Image.find().then((images) => {
-      return res.json({ images });
+      return res.json({
+        images
+      });
     });
   } catch (e) {
     return res.status(500).json({
